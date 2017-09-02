@@ -38,7 +38,27 @@ shift $(($OPTIND - 1))
 # Move argument pointer to next.
 
 
+
+# Eror Reporting
+# Regarding error-reporting, there are two modes getopts can run in:
+# 1. verbose mode
+# 2. slient mode
+#
+#
+# Verbose mode
+# invalid option -->	VARNAME is set to ? (question-mark) and OPTARG is unset
+# required argument not foun --> 	VARNAME is set to ? (question-mark), OPTARG is unset and an error message is printed
+#
+# Silent Mode
+# invalid option -->	VARNAME is set to ? (question-mark) and OPTARG is set to the (invalid) option character
+# required argument not found -->	VARNAME is set to : (colon) and OPTARG contains the option-character in question
+#
+
+
 while getopts ":a:" opt; do
+	# When you want getopts to expect an argument for an option, just place a : (colon) 
+	# after the proper option flag. If you want -A to expect an argument
+	# (i.e. to become -A SOMETHING) just do:
 	case $opt in
 		a)
 			echo "-a was triggered, Parameter: $OPTARG" >&2
@@ -53,3 +73,5 @@ while getopts ":a:" opt; do
 			;;
 	esac
 done
+
+# getopts ref http://wiki.bash-hackers.org/howto/getopts_tutorial
